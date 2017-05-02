@@ -499,6 +499,25 @@ def dblquad(func, a, b, gfun, hfun, args=(), epsabs=1.49e-8, epsrel=1.49e-8):
     romb : integrator for sampled data
     scipy.special : for coefficients and roots of orthogonal polynomials
 
+    Examples
+    --------
+
+    Following example computes the value of :math:`I_{n} = `
+    >>> from scipy.integrate import dblquad
+    >>> def I(n):
+    ...     return dblquad(lambda t, x: np.exp(-x*t)/t**n, 0, np.inf, lambda x: 1, lambda x: np.inf)
+    ...
+    >>> I(4)
+    (0.2500000000043577, 1.2983033469368098e-08)
+    >>> I(2)
+    (0.4999999999985751, 1.3894083651858995e-08)
+
+    >>> # evaluate non-constant limits
+    ...
+    >>> area = dblquad(lambda x, y: x*y, 0, 0.5, lambda x: 0, lambda x: 1-2*x)
+    >>> area
+    (0.010416666666666668, 4.101620128472366e-16)
+
     """
     def temp_ranges(*args):
         return [gfun(args[0]), hfun(args[0])]
